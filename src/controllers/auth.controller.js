@@ -1,39 +1,30 @@
-const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const User = require("../models/User");
+const AuthService = require("../services/auth.service.js");
+
+const { ZodError } = require("zod");
+const AppError = require("../utils/AppError.js");
+
 async function register(req, res) {
   try {
-    const { name, email, password } = req.body;
-
-    if (!name || !email || !password) {
-      return res.status(400).json({
-        message: "Preenchimento dos campos obrigatorio.",
-      });
-    }
-
-    const registeredUser = await User.findOne({ email });
-
-    if (registeredUser) {
-      return res.status(409).json({
-        message: "Este usuário já existe.",
-      });
-    }
-
-    const salt = await bcrypt.genSalt(12);
-    const hasheredPassword = await bcrypt.hash(password, salt);
-    const user = new User({ name, email, passwordHash: hasheredPassword });
-
-    await user.save();
-
-    return res.status(201).json({
-      message: "Usuário criado com sucesso!",
-    });
+    const createdUser = await AuthService.register(req.body);
+    return res.status(201).json(createdUser);
   } catch (error) {
-    console.log(error);
+    if (error instanceof ZodError) {
+      return res.status(400).json({
+        message:
+          error.issues[0]?.message || "Verifique os campos e tente novamente.",
+      });
+    } else if (error instanceof AppError) {
+      return res.status(error.statusCode).json({
+        message: error.message,
+      });
+    }
+
     return res.status(500).json({
-      message: "Erro interno, tente novamente.",
-      erro: error,
+      message: "Erro interno, tente novamente mais tarde!",
     });
   }
 }
