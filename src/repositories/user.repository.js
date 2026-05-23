@@ -16,7 +16,7 @@ async function updatePassword(user, passwordHash) {
 }
 
 module.exports = {
-  findUserByEmail,
+  findByEmail,
   findByEmployeeCode,
   create,
   updatePassword,
