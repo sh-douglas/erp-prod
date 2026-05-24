@@ -10,6 +10,9 @@ const registerSchema = z
     confirmPassword: z
       .string()
       .min(6, "A senha deve ter pelo menos 6 caracteres"),
+    acceptedTerms: z.literal(true, {
+      message: "É necessário aceitar os termos para criar a conta.",
+    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "As senhas não conferem.",
