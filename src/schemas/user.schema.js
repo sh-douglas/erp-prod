@@ -23,6 +23,15 @@ const UserSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    acceptedTerms: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    acceptedTermsAt: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,
