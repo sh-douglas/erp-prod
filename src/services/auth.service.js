@@ -26,14 +26,19 @@ async function register(data) {
     email: cleanData.email,
     employeeCode,
     passwordHash: hashedPassword,
+    acceptedTerms: cleanData.acceptedTerms,
+    acceptedTermsAt: new Date(),
   });
 
   return {
     message: "Usuário criado com sucesso!",
     user: {
+      id: createdUser._id,
       name: createdUser.name,
       email: createdUser.email,
       employeeCode: createdUser.employeeCode,
+      acceptedTerms: createdUser.acceptedTerms,
+      acceptedTermsAt: createdUser.acceptedTermsAt,
     },
   };
 }
