@@ -16,7 +16,8 @@
   "type": "commonjs",
   "main": "app.js",
   "scripts": {
-    "dev": "node ./app.js --watch"
+    "dev": "node ./app.js --watch",
+    "prod": "node ./app.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
