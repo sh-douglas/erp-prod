@@ -6,6 +6,7 @@ const app = express();
 
 const connection = require("./src/config/database.js");
 const authRoutes = require("./src/routes/auth.routes.js");
+const userRoutes = require("./src/routes/user.routes.js");
 
 const port = process.env.PORT || 5000;
 
@@ -13,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/users", userRoutes);
 
 connection().then(() => {
   app.listen(port, () => {
