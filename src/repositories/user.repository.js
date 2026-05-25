@@ -14,10 +14,14 @@ async function updatePassword(user, passwordHash) {
   user.passwordHash = passwordHash;
   return await user.save();
 }
+async function findById(id) {
+  return await User.findById({ _id: id });
+}
 
 module.exports = {
   findByEmail,
   findByEmployeeCode,
   create,
   updatePassword,
+  findById,
 };
