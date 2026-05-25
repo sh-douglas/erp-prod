@@ -9,6 +9,7 @@ const {
   loginSchema,
   passwordRecoverySchema,
 } = require("../validators/auth.validator.js");
+const { sendWelcomeEmail } = require("./main.service.js");
 
 async function register(data) {
   const cleanData = registerSchema.parse(data);
@@ -29,6 +30,16 @@ async function register(data) {
     acceptedTerms: cleanData.acceptedTerms,
     acceptedTermsAt: new Date(),
   });
+
+  try {
+    await sendWelcomeEmail(
+      createdUser.name,
+      createdUser.email,
+      createdUser.employeeCode,
+    );
+  } catch (error) {
+    console.log("Erro ao enviar e-mail de boas-vindas:", error.message);
+  }
 
   return {
     message: "Usuário criado com sucesso!",
