@@ -31,15 +31,13 @@ async function register(data) {
     acceptedTermsAt: new Date(),
   });
 
-  try {
-    await sendWelcomeEmail(
-      createdUser.name,
-      createdUser.email,
-      createdUser.employeeCode,
-    );
-  } catch (error) {
-    console.log("Erro ao enviar e-mail de boas-vindas:", error.message);
-  }
+  sendWelcomeEmail(
+    createdUser.name,
+    createdUser.email,
+    createdUser.employeeCode,
+  ).then((error) => {
+    console.log(`Erro ao enviar e-mail`);
+  });
 
   return {
     message: "Usuário criado com sucesso!",
