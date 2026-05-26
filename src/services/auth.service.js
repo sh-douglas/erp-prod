@@ -35,7 +35,7 @@ async function register(data) {
     createdUser.name,
     createdUser.email,
     createdUser.employeeCode,
-  ).then((error) => {
+  ).catch((error) => {
     console.log(`Erro ao enviar e-mail`);
   });
 
